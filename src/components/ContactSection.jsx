@@ -44,7 +44,7 @@ export default function ContactSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:5000/api/contact", {
+    const res = await fetch( `${process.env.NEXT_PUBLIC_SERVER_URL}/api/contact`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export default function ContactSection() {
   return (
     <section
       ref={sectionRef}
-      className="py-28 bg-gray-50 dark:bg-[#081120]"
+      className="py-5 bg-gray-50 dark:bg-[#081120]"
     >
       <div className="container-main">
 

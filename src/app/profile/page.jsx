@@ -3,8 +3,32 @@
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 import toast from "react-hot-toast";
-
+import { FaLocationDot } from "react-icons/fa6";
 export default function ProfilePage() {
+     const protectedRoute = (path) => {
+    setMobileOpen(false);
+
+    if (!user) {
+      toast.error("Please login to continue", {
+        style: {
+          borderRadius: "18px",
+          padding: "16px",
+          background: "#0f172a",
+          color: "#fff",
+          border: "1px solid rgba(255,255,255,0.08)"
+        }
+      });
+
+      router.push("/login");
+      return;
+    }
+
+    router.push(path);
+  };
+
+
+
+  
   const { user, setUser } = useAuth();
   const [editing, setEditing] = useState(false);
 
@@ -25,7 +49,7 @@ export default function ProfilePage() {
     const token = localStorage.getItem("token");
 
     const res = await fetch(
-      "http://localhost:5000/api/auth/profile",
+       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/profile`,
       {
         method: "PUT",
         headers: {
@@ -49,98 +73,270 @@ export default function ProfilePage() {
   };
 
   return (
-    <section className="container-main py-20">
 
-      <div className="max-w-3xl mx-auto bg-white dark:bg-[#111827] rounded-[36px] shadow-xl border p-12">
 
-        {!editing ? (
-          <>
+    <section
+  className="
+    min-h-screen
+    relative
+    overflow-hidden
+    bg-gradient-to-br
+    from-white
+    via-slate-100
+    to-slate-200
+    dark:from-[#020617]
+    dark:via-[#071028]
+    dark:to-[#0f172a]
+    py-20 px-4
+  "
+>
 
-            <div className="text-center">
+ 
+  <div className="absolute top-0 left-0 w-72 h-72 bg-cyan-500/20 blur-[120px] rounded-full" />
+  <div className="absolute bottom-0 right-0 w-72 h-72 bg-blue-500/20 blur-[120px] rounded-full" />
 
-              <img
-                src={user?.photo}
-                className="w-36 h-36 rounded-full object-cover border-4 border-blue-500 mx-auto"
-              />
+  <div
+    className="
+      relative
+      max-w-3xl mx-auto
+      rounded-[40px]
+      border border-white/20 dark:border-white/10
+      bg-white/70 dark:bg-white/5
+      backdrop-blur-2xl
+      shadow-[0_20px_80px_rgba(0,0,0,0.08)]
+      dark:shadow-[0_20px_80px_rgba(0,0,0,0.45)]
+      overflow-hidden
+    "
+  >
 
-              <h1 className="text-4xl font-bold mt-6">
-                {user?.name}
-              </h1>
+ 
+    <div
+      className="
+        h-[3px]
+        bg-gradient-to-r
+        from-transparent
+        via-cyan-400
+        to-transparent
+      "
+    />
 
-              <p className="text-gray-500 mt-3">
-                {user?.email}
-              </p>
+    {!editing ? (
+      <div className="px-8 md:px-14 py-14 text-center">
 
-              <p className="text-gray-500 mt-2">
-                {user?.location || "Location not added"}
-              </p>
+      
+        <div className="relative w-fit mx-auto">
 
-              <button
-                onClick={() => setEditing(true)}
-                className="mt-10 px-8 py-4 rounded-2xl bg-blue-600 text-white font-semibold"
-              >
-                Update Profile
-              </button>
+          <div className="absolute inset-0 bg-cyan-500/30 blur-2xl rounded-full" />
 
-            </div>
-          </>
-        ) : (
-          <>
+          <img
+            src={
+              user?.photo ||
+              "https://plus.unsplash.com/premium_vector-1683140924463-adba1c428d66?q=80&w=880&auto=format&fit=crop"
+            }
+            onError={(e) => {
+              e.target.src =
+                "https://plus.unsplash.com/premium_vector-1683140924463-adba1c428d66?q=80&w=880&auto=format&fit=crop";
+            }}
+            className="
+              relative
+              w-36 h-36
+              rounded-full
+              object-cover
+              border-4 border-cyan-500
+              shadow-[0_10px_40px_rgba(6,182,212,0.35)]
+            "
+          />
 
-            <h1 className="text-4xl font-bold mb-10">
-              Update Profile
-            </h1>
+        </div>
 
-            <div className="space-y-7">
+        <h1
+          className="
+            mt-8
+            text-4xl md:text-5xl
+            font-black
+            bg-gradient-to-r
+            from-slate-900
+            via-cyan-600
+            to-blue-600
+            dark:from-white
+            dark:via-cyan-300
+            dark:to-blue-400
+            bg-clip-text text-transparent
+          "
+        >
+          {user?.name}
+        </h1>
 
-              <input
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                placeholder="Name"
-                className="w-full border rounded-2xl px-5 py-4"
-              />
 
-              <input
-                name="photo"
-                value={form.photo}
-                onChange={handleChange}
-                placeholder="Photo URL"
-                className="w-full border rounded-2xl px-5 py-4"
-              />
+        <p className="mt-4 text-slate-600 dark:text-slate-400 text-lg">
+          {user?.email}
+        </p>
 
-              <input
-                name="location"
-                value={form.location}
-                onChange={handleChange}
-                placeholder="Location"
-                className="w-full border rounded-2xl px-5 py-4"
-              />
+        <div
+          className="
+            mt-5
+            inline-flex items-center gap-2
+            px-5 py-3
+            rounded-full
+            bg-white/70 dark:bg-white/5
+            border border-slate-200 dark:border-white/10
+            text-slate-700 dark:text-slate-300
+            backdrop-blur-xl
+          "
+        >
+          <FaLocationDot /> {user?.location || "Location not added"}
+        </div>
 
-              <div className="flex gap-4">
+   
+        <button
+          onClick={() => setEditing(true)}
+          className="
+            group
+            relative overflow-hidden
+            mt-10
+            px-10 py-4
+            rounded-2xl
+            bg-gradient-to-r
+            from-cyan-500
+            via-blue-500
+            to-indigo-600
+            text-white
+            font-bold
+            shadow-[0_10px_40px_rgba(59,130,246,0.35)]
+            hover:scale-105
+            transition-all duration-300
+          "
+        >
 
-                <button
-                  onClick={updateProfile}
-                  className="flex-1 py-4 rounded-2xl bg-blue-600 text-white"
-                >
-                  Save Changes
-                </button>
+          <span className="relative z-10">
+            Update Profile
+          </span>
 
-                <button
-                  onClick={() => setEditing(false)}
-                  className="flex-1 py-4 rounded-2xl border"
-                >
-                  Cancel
-                </button>
+          <div
+            className="
+              absolute inset-0
+              -translate-x-full
+              group-hover:translate-x-full
+              transition duration-1000
+              bg-gradient-to-r
+              from-transparent
+              via-white/20
+              to-transparent
+            "
+          />
 
-              </div>
-
-            </div>
-          </>
-        )}
+        </button>
 
       </div>
+    ) : (
+      <div className="px-8 md:px-14 py-14">
 
-    </section>
+  
+        <div className="mb-10 text-center">
+
+          <h1
+            className="
+              text-4xl md:text-5xl
+              font-black
+              bg-gradient-to-r
+              from-slate-900
+              via-cyan-600
+              to-blue-600
+              dark:from-white
+              dark:via-cyan-300
+              dark:to-blue-400
+              bg-clip-text text-transparent
+            "
+          >
+            Edit Profile
+          </h1>
+
+          <p className="mt-4 text-slate-600 dark:text-slate-400">
+            Update your personal information
+          </p>
+
+        </div>
+
+        <div className="space-y-6">
+
+          <input
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Name"
+            className="
+              w-full h-16
+              rounded-3xl
+              border border-slate-200 dark:border-white/10
+              bg-white/80 dark:bg-white/5
+              backdrop-blur-xl
+              px-5
+              text-slate-800 dark:text-white
+              placeholder:text-slate-400 dark:placeholder:text-white/40
+              focus:outline-none
+              focus:ring-2
+              focus:ring-cyan-500/40
+            "
+          />
+
+          <input
+            name="photo"
+            value={form.photo}
+            onChange={handleChange}
+            placeholder="Photo URL"
+            className="
+              w-full h-16
+              rounded-3xl
+              border border-slate-200 dark:border-white/10
+              bg-white/80 dark:bg-white/5
+              backdrop-blur-xl
+              px-5
+              text-slate-800 dark:text-white
+              placeholder:text-slate-400 dark:placeholder:text-white/40
+              focus:outline-none
+              focus:ring-2
+              focus:ring-cyan-500/40
+            "
+          />
+
+          <input
+            name="location"
+            value={form.location}
+            onChange={handleChange}
+            placeholder="Location"
+            className=" w-full h-16 rounded-3xl border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-white/5
+              backdrop-blur-xl
+              px-5
+              text-slate-800 dark:text-white
+              placeholder:text-slate-400 dark:placeholder:text-white/40
+              focus:outline-none
+              focus:ring-2
+              focus:ring-cyan-500/40 "
+          />
+
+          <div className="flex flex-col md:flex-row gap-4 pt-4">
+
+            <button
+              onClick={updateProfile}
+              className=" flex-1 h-16 rounded-3xlbg-gradient-to-r  from-cyan-500 via-blue-500 to-indigo-600 text-blue font-bold shadow-[0_10px_40px_rgba(59,130,246,0.35)] hover:scale-[1.01] transition-all duration-300 " >
+              Save Changes
+            </button>
+
+            <button
+              onClick={() => setEditing(false)}
+              className="flex-1 h-16 rounded-3xl border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-white/5backdrop-blur-xl text-slate-800 dark:text-white  hover:bg-slate-100 dark:hover:bg-white/10 transition-all duration-300">
+              Cancel
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+    )}
+
+  </div>
+
+</section>
   );
 }

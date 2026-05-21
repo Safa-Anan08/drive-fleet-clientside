@@ -8,7 +8,7 @@ import {
 
 export default function CarCard({ car }) {
   return (
-    <div className="bg-white dark:bg-[#111827] rounded-[28px] overflow-hidden border border-gray-200 dark:border-gray-800 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 flex flex-col">
+    <div className="bg-white dark:bg-[#111827] rounded-[28px] overflow-hidden border border-gray-200 dark:border-gray-800 shadow-md hover:shadow-[0_18px_40px_rgba(37,99,235,0.12)] dark:hover:shadow-[0_18px_40px_rgba(14,165,233,0.14)] transition-all duration-300 hover:-translate-y-2 flex flex-col">
 
       <div className="relative w-full h-[260px] overflow-hidden">
 

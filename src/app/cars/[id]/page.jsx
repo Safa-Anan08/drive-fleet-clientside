@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import Loader from "@/components/Loader";
+import {
+  FaMapMarkerAlt,
+  FaChair,FaCarSide
+} from "react-icons/fa";
 export default function CarDetails() {
   const { id } = useParams();
   const [car, setCar] = useState(null);
@@ -11,13 +15,13 @@ export default function CarDetails() {
 
   const [bookingData, setBookingData] = useState({
     date: "",
-    driverNeeded: "No",
+    driverNeeded: "",
     location: "",
   });
 
   const fetchCar = async () => {
     const res = await fetch(
-      `http://localhost:5000/api/cars/${id}`
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/cars/${id}`
     );
     const data = await res.json();
     setCar(data);
@@ -34,31 +38,46 @@ export default function CarDetails() {
     });
   };
 
-  const confirmBooking = async () => {
-    const token = localStorage.getItem("token");
+ const confirmBooking = async () => {
+  if (!bookingData.date) {
+    return toast.error("Booking date is required");
+  }
 
-    const res = await fetch(
-      `http://localhost:5000/api/bookings/${id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(bookingData),
-      }
-    );
+  if (!bookingData.location.trim()) {
+    return toast.error("Pickup location is required");
+  }
 
-    const data = await res.json();
+  if (
+    bookingData.driverNeeded !== "Yes" &&
+    bookingData.driverNeeded !== "No"
+  ) {
+    return toast.error("Please select driver option");
+  }
 
-    if (res.ok) {
-      toast.success("Booking confirmed");
-      setShowForm(false);
-      fetchCar();
-    } else {
-      toast.error(data.message);
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/bookings/${id}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(bookingData),
     }
-  };
+  );
+
+  const data = await res.json();
+
+  if (res.ok) {
+    toast.success("Booking confirmed");
+    setShowForm(false);
+    fetchCar();
+  } else {
+    toast.error(data.message);
+  }
+};
 
   if (!car) return <Loader />;
 
@@ -83,9 +102,10 @@ export default function CarDetails() {
           </p>
 
           <div className="mt-8 space-y-4">
-  <p>📍 {car.location}</p>
-  <p>👥 {car.seats} Seats</p>
-  <p>⛽ {car.mileage}</p>
+  <p className="flex gap-3"><FaMapMarkerAlt className="text-red-600"/> {car.location}</p>
+  <p className="flex gap-3 
+  "><FaChair className="text-yellow-800"/>{car.seats} Seats</p>
+  <p className="flex gap-3"><FaCarSide className="text-blue-600"/>{car.mileage}</p>
 
   <p
     className={`font-semibold ${
@@ -138,10 +158,28 @@ export default function CarDetails() {
                 name="driverNeeded"
                 value={bookingData.driverNeeded}
                 onChange={handleChange}
-                className="w-full border rounded-xl px-4 py-4"
+                className="w-full rounded-xl px-4 py-4 border bg-white dark:bg-[#111827] text-black dark:text-white border-gray-300 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option>No Driver Needed</option>
-                <option>Driver Needed</option>
+                <option
+  value=""
+  className="bg-white text-black dark:bg-[#111827] dark:text-white"
+>
+  Select Driver Option
+</option>
+
+<option
+  value="Yes"
+  className="bg-white text-black dark:bg-[#111827] dark:text-white"
+>
+  Yes, Driver Needed
+</option>
+
+<option
+  value="No"
+  className="bg-white text-black dark:bg-[#111827] dark:text-white"
+>
+  No Driver Needed
+</option>
               </select>
 
               <input

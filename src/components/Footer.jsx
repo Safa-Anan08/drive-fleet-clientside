@@ -3,12 +3,13 @@
 import {
   FaFacebookF,
   FaInstagram,
-  FaLinkedinIn
+  FaLinkedinIn,
 } from "react-icons/fa";
-
+import { FaXTwitter } from "react-icons/fa6";
+import Link from "next/link";
 export default function Footer() {
   return (
-    <footer className="bg-white dark:bg-[#081120] border-t py-16">
+    <footer className="bg-white dark:bg-[#081120] border-t py-8">
 
       <div className="container-main">
 
@@ -32,11 +33,34 @@ export default function Footer() {
               Quick Links
             </h3>
 
-            <div className="space-y-3 text-gray-500">
-              <p>Home</p>
-              <p>Explore Cars</p>
-              <p>Add Car</p>
-              <p>My Bookings</p>
+            <div className="space-y-6 text-gray-500">
+               <ul className="space-y-4">
+
+            <li>
+              <Link href="/" className="hover:text-green-500">
+                Home
+              </Link>
+            </li>
+
+            <li>
+              <Link href="/cars" className="hover:text-green-500">
+                Explore Cars
+              </Link>
+            </li>
+
+            <li>
+              <Link href="/my-profile" className="hover:text-green-500">
+                Profile
+              </Link>
+            </li>
+            <li>
+              <Link href="/my-bookings"  className="hover:text-green-500">
+                My Bookings
+              </Link>
+            </li>
+
+          </ul>
+             
             </div>
           </div>
 
@@ -49,7 +73,7 @@ export default function Footer() {
             <div className="space-y-3 text-gray-500">
               <p>Dhaka, Bangladesh</p>
               <p>support@drivefleet.com</p>
-              <p>+880 1533-380769</p>
+              <p>+880 1234567890</p>
             </div>
           </div>
 
@@ -60,17 +84,25 @@ export default function Footer() {
             </h3>
 
             <div className="flex gap-4">
+ <div className="flex gap-4 mt-5 text-xl">
 
-              {[FaFacebookF, FaInstagram, FaLinkedinIn].map(
-                (Icon, i) => (
-                  <div
-                    key={i}
-                    className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-[#111827] flex items-center justify-center text-blue-600 hover:scale-110 transition"
-                  >
-                    <Icon />
-                  </div>
-                )
-              )}
+            <a href="https://facebook.com" className="hover:text-blue-500">
+              <FaFacebookF />
+            </a>
+
+            <a href="https://instagram.com" className="hover:text-pink-500">
+              <FaInstagram />
+            </a>
+
+            <a href="https://twitter.com" className="hover:text-sky-400">
+              <FaXTwitter />
+            </a>
+
+            <a href="https://github.com" className="hover:text-gray-300">
+              <FaLinkedinIn />
+            </a>
+
+          </div>
 
             </div>
           </div>

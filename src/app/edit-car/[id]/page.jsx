@@ -9,6 +9,8 @@ export default function EditCar() {
   const { id } = useParams();
   const router = useRouter();
 
+  const [loading, setLoading] = useState(true);
+
   const [form, setForm] = useState({
     name: "",
     price: "",
@@ -18,133 +20,160 @@ export default function EditCar() {
     mileage: "",
     location: "",
     description: "",
-    availableCars: ""
+    availableCars: "",
   });
 
-  const token = localStorage.getItem("token");
+  const token =
+    typeof window !== "undefined"
+      ? localStorage.getItem("token")
+      : null;
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/cars`)
+      .get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/cars`)
       .then((res) => {
         const car = res.data.find((c) => c._id === id);
 
-        if (car) setForm(car);
+        if (car) {
+          setForm(car);
+        }
+
+        setLoading(false);
+      })
+      .catch(() => {
+        toast.error("Failed to load car");
+        setLoading(false);
       });
   }, [id]);
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios.put(
-      `http://localhost:5000/api/cars/${id}`,
-      form,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
+    try {
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/cars/${id}`,
+        form,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      }
-    );
+      );
 
-    toast.success("Car Updated");
-    router.push("/my-cars");
+      toast.success("Car Updated");
+      router.push("/my-cars");
+    } catch {
+      toast.error("Update failed");
+    }
   };
 
+  if (loading) {
+    return (
+      <div className="py-32 text-center text-xl">
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-3xl mx-auto py-20">
+    <section className="min-h-screen py-20 px-4 bg-gradient-to-b from-slate-50 to-white dark:from-[#081120] dark:to-[#0f172a]">
 
-      <form
-        onSubmit={handleSubmit}
-        className="glass p-10 rounded-3xl space-y-5"
-      >
-        <h2 className="text-3xl font-bold">
-          Edit Car
-        </h2>
+      <div className="max-w-5xl mx-auto">
 
-        <input
-          value={form.name}
-          onChange={(e) =>
-            setForm({ ...form, name: e.target.value })
-          }
-          className="w-full p-4 rounded-xl"
-        />
+        <div className="mb-12 text-center">
+          <p className="uppercase tracking-[0.3em] text-blue-500 text-sm">
+            Update Vehicle
+          </p>
 
-        <input
-          value={form.price}
-          onChange={(e) =>
-            setForm({ ...form, price: e.target.value })
-          }
-          className="w-full p-4 rounded-xl"
-        />
+          <h1 className="text-5xl font-black mt-4">
+            Edit Car Details
+          </h1>
 
-        <input
-          value={form.type}
-          onChange={(e) =>
-            setForm({ ...form, type: e.target.value })
-          }
-          className="w-full p-4 rounded-xl"
-        />
+          <p className="text-gray-500 dark:text-gray-400 mt-4 text-lg">
+            Refine your premium fleet listing
+          </p>
+        </div>
 
-        <input
-          value={form.image}
-          onChange={(e) =>
-            setForm({ ...form, image: e.target.value })
-          }
-          className="w-full p-4 rounded-xl"
-        />
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-[32px] shadow-xl p-10 md:p-14"
+        >
+          <div className="grid md:grid-cols-2 gap-6">
 
-        <input
-          value={form.seats}
-          onChange={(e) =>
-            setForm({ ...form, seats: e.target.value })
-          }
-          className="w-full p-4 rounded-xl"
-        />
+            {[
+              ["name", "Car Name"],
+              ["price", "Price"],
+              ["type", "Type"],
+              ["image", "Image URL"],
+              ["seats", "Seats"],
+              ["mileage", "Mileage"],
+              ["location", "Location"],
+              ["availableCars", "Available Cars"],
+            ].map(([key, label]) => (
+              <input
+                key={key}
+                name={key}
+                value={form[key]}
+                onChange={handleChange}
+                placeholder={label}
+                className="w-full px-5 py-4 rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1f2937] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              />
+            ))}
 
-        <input
-          value={form.mileage}
-          onChange={(e) =>
-            setForm({ ...form, mileage: e.target.value })
-          }
-          className="w-full p-4 rounded-xl"
-        />
+          </div>
 
-        <input
-          value={form.location}
-          onChange={(e) =>
-            setForm({ ...form, location: e.target.value })
-          }
-          className="w-full p-4 rounded-xl"
-        />
+          <textarea
+            name="description"
+            value={form.description}
+            onChange={handleChange}
+            placeholder="Description"
+            rows="5"
+            className="w-full mt-6 px-5 py-4 rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1f2937] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          />
 
-        <input
-          value={form.availableCars}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              availableCars: e.target.value
-            })
-          }
-          className="w-full p-4 rounded-xl"
-        />
+          {form.image && (
+            <div className="mt-8">
+              <p className="mb-3 font-semibold">
+                Live Preview
+              </p>
 
-        <textarea
-          value={form.description}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              description: e.target.value
-            })
-          }
-          className="w-full p-4 rounded-xl"
-        />
+              <img
+                src={form.image}
+                alt="preview"
+                className="w-full h-72 object-cover rounded-3xl border"
+              />
+            </div>
+          )}
 
-        <button className="glow-btn px-8 py-4 rounded-2xl text-white">
-          Update Car
-        </button>
+          <div className="flex gap-4 mt-10">
 
-      </form>
+            <button
+              type="submit"
+              className="flex-1 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold hover:scale-[1.02] transition shadow-lg"
+            >
+              Update Car
+            </button>
 
-    </div>
+            <button
+              type="button"
+              onClick={() => router.push("/my-cars")}
+              className="flex-1 py-4 rounded-2xl border border-gray-300 dark:border-gray-700 font-semibold hover:bg-gray-100 dark:hover:bg-[#1f2937] transition"
+            >
+              Cancel
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+    </section>
   );
 }

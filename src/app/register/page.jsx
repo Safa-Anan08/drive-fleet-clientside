@@ -8,8 +8,9 @@ export default function Register() {
   const [form, setForm] = useState({
     name: "",
     email: "",
-    image: "",
+    photo: "",
     password: "",
+    location: "",
   });
 
   const [error, setError] = useState("");
@@ -41,7 +42,7 @@ export default function Register() {
 
     const userData = {
       ...form,
-      image: form.image || defaultImage,
+      photo: form.photo || defaultImage,
     };
 
     try {
@@ -53,6 +54,20 @@ export default function Register() {
     }
   };
 
+const handleGoogle = async () => {
+  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+
+  const redirectUri = window.location.origin + "/oauth/google";
+
+  const url =
+    `https://accounts.google.com/o/oauth2/v2/auth` +
+    `?client_id=${clientId}` +
+    `&redirect_uri=${redirectUri}` +
+    `&response_type=token` +
+    `&scope=profile email`;
+
+  window.location.href = url;
+};
   return (
     <div className="min-h-screen hero-glow flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-10 items-center">
@@ -139,9 +154,9 @@ export default function Register() {
                 variant="bordered"
                 label="Image URL"
                 placeholder="Paste profile image URL (optional)"
-                value={form.image}
+                value={form.photo}
                 onChange={(e) =>
-                  setForm({ ...form, image: e.target.value })
+                  setForm({ ...form, photo: e.target.value })
                 }
               />
 
@@ -189,12 +204,11 @@ export default function Register() {
                 <div className="flex-1 h-[1px] bg-white/10"></div>
               </div>
 
-             <Button
+             <Button 
   size="lg"
   radius="lg"
   variant="bordered"
-  className="h-14 w-full border-white/10 hover:border-blue-400 transition-all duration-300"
->
+  className="h-14 w-full border-white/10 hover:border-blue-400 transition-all duration-300" onClick={handleGoogle}>
   <div className="flex items-center justify-center gap-3 w-full">
     
     <img

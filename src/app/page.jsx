@@ -9,12 +9,13 @@ import FeaturedCards from "@/components/FeaturedCards";
 import CarCard from "@/components/CarCard";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import CarTypeCards from "@/components/CarTypeCards";
 export default function Home() {
   const [cars, setCars] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/cars")
+      .get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/cars`)
       .then((res) => {
         setCars(res.data.slice(0, 4));
       });
@@ -26,7 +27,7 @@ export default function Home() {
       <TrustedBy />
       <FeaturedCards />
 
-      <section className="container-main py-24">
+      <section className="container-main py-10">
 
         <div className="mb-14">
 
@@ -68,6 +69,7 @@ export default function Home() {
 </div>
 
       </section>
+      <CarTypeCards />
       <ContactSection />
 <Footer />
     </>
