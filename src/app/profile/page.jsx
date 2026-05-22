@@ -171,9 +171,7 @@ export default function ProfilePage() {
         <p className="mt-4 text-slate-600 dark:text-slate-400 text-lg">
           {user?.email}
         </p>
-
-        <div
-          className="
+        <p className="
             mt-5
             inline-flex items-center gap-2
             px-5 py-3
@@ -182,9 +180,12 @@ export default function ProfilePage() {
             border border-slate-200 dark:border-white/10
             text-slate-700 dark:text-slate-300
             backdrop-blur-xl
-          "
+          "><FaLocationDot /> {user?.location || "Location not added"}</p>
+
+        <div
+          
         >
-          <FaLocationDot /> {user?.location || "Location not added"}
+          
         </div>
 
    

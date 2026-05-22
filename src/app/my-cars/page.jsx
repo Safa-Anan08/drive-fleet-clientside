@@ -5,7 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import EmptyState from "@/components/EmptyState";
-
+import PrivateRoute from "@/components/PrivateRoute";
 export default function MyCars() {
   const [cars, setCars] = useState([]);
   const [token, setToken] = useState("");
@@ -144,6 +144,7 @@ export default function MyCars() {
   }
 
 return (
+    
   <section className="container-main py-20">
 
   
@@ -261,7 +262,7 @@ return (
                 </span>
 
                 <span className="font-semibold text-[var(--text)]">
-                  BDT{car.price}/day
+                  BDT {car.price}/day
                 </span>
               </div>
 
@@ -320,5 +321,6 @@ return (
     </div>
 
   </section>
+  
 );
 }

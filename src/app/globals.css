@@ -19,8 +19,7 @@ body {
   --shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
 }
 
-.dark
- {
+.dark {
   --bg: #020617;
   --card: rgba(15, 23, 42, 0.82);
   --text: #f8fafc;

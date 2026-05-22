@@ -41,9 +41,12 @@ export default function Register() {
 
 
     const userData = {
-      ...form,
-      photo: form.photo || defaultImage,
-    };
+  name: form.name,
+  email: form.email,
+  password: form.password,
+  photo: form.photo.trim() || defaultImage,
+  location: "",
+};
 
     try {
       await api.post("/auth/register", userData);
@@ -52,6 +55,7 @@ export default function Register() {
       console.error(err);
       setError("Registration failed.");
     }
+    console.log(form);
   };
 
 const handleGoogle = async () => {
@@ -156,7 +160,7 @@ const handleGoogle = async () => {
                 placeholder="Paste profile image URL (optional)"
                 value={form.photo}
                 onChange={(e) =>
-                  setForm({ ...form, photo: e.target.value })
+                  setForm({ ...form, photo:e.target.value,})
                 }
               />
 

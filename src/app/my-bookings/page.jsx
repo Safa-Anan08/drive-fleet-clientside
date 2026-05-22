@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import {
   FaCarSide
 } from "react-icons/fa";
+import PrivateRoute from "@/components/PrivateRoute";
 export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
 
@@ -47,7 +48,7 @@ export default function MyBookings() {
     fetchBookings();
   };
 if (!bookings.length) {
-  return (
+  return (<PrivateRoute>
     <section className="container-main  py-20">
       <EmptyState
         title="Your Booking List Is Empty"
@@ -55,10 +56,11 @@ if (!bookings.length) {
         buttonText="Explore Cars"
         buttonLink="/cars"
       />
-    </section>
+    </section></PrivateRoute>
   );
 }
 return (
+   <PrivateRoute>
   <div className="container-main py-8">
     <div className="mb-12">
       <h1 className="text-4xl md:text-5xl font-black tracking-tight bg-gradient-to-r from-slate-900 via-slate-700 to-slate-500 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
@@ -120,7 +122,7 @@ return (
                 </p>
 
                 <h3 className="text-3xl font-black text-white dark:text-black">
-                  ${booking.price}
+                  BDT {booking.price}
                   <span className="text-base font-medium opacity-70">
                     /day
                   </span>
@@ -161,7 +163,7 @@ return (
         </motion.div>
       ))}
     </div>
-  </div>
+  </div></PrivateRoute>
 );
  
 }

@@ -191,8 +191,10 @@ useEffect(() => {
                     Edit Profile
                   </button>
 
-                  <div className="px-5 py-4 border-y border-white/10 flex justify-between items-center">
-                    <span>Theme</span>
+                  <div 
+                  onClick={(e) => e.stopPropagation()}
+                  className="  flex justify-between items-center">
+                    
                     <ThemeToggle onToggleComplete={() => setOpen(false)} />
                   </div>
 

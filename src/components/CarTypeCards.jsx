@@ -46,7 +46,7 @@ export default function CarTypeCards() {
       image:
         "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1400&auto=format&fit=crop",
       desc: "Premium class vehicles crafted for ultimate comfort and prestige.",
-      link: "/cars?type=Luxury",
+      link: "/cars?type=Luxury SUV,Luxury Sedan",
     },
   ];
 
@@ -70,7 +70,7 @@ export default function CarTypeCards() {
 
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
 
         {carTypes.map((car, i) => (
           <Link

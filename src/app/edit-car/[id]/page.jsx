@@ -108,8 +108,8 @@ export default function EditCar() {
           <div className="grid md:grid-cols-2 gap-6">
 
             {[
-              ["name", "Car Name"],
-              ["price", "Price"],
+              ["name", "Car Name" ],
+              ["price", "Price" ],
               ["type", "Type"],
               ["image", "Image URL"],
               ["seats", "Seats"],
@@ -117,21 +117,29 @@ export default function EditCar() {
               ["location", "Location"],
               ["availableCars", "Available Cars"],
             ].map(([key, label]) => (
+              
+              
+               <div key={key} className="space-y-2">
+
+    <label className="text-sm ">
+      {label}:
+    </label>
               <input
                 key={key}
                 name={key}
                 value={form[key]}
                 onChange={handleChange}
-                placeholder={label}
+                placeholder={`Enter ${label}`}
                 className="w-full px-5 py-4 rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1f2937] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-              />
+              /></div>
             ))}
-
+ 
           </div>
-
+         
           <textarea
+         
             name="description"
-            value={form.description}
+            value= {form.description}
             onChange={handleChange}
             placeholder="Description"
             rows="5"

@@ -16,6 +16,9 @@ export default function Page() {
     })
       .then((res) => res.json())
       .then(async (data) => {
+         if (!data.email) {
+    return;
+  }
         const res = await api.post("/auth/google", {
           name: data.name,
           email: data.email,
@@ -29,5 +32,11 @@ export default function Page() {
       });
   }, []);
 
-  return <p>Loading...</p>;
+  return (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="glass px-8 py-6 rounded-3xl">
+      Signing you in...
+    </div>
+  </div>
+);
 }

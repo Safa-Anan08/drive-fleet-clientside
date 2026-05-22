@@ -1,36 +1,212 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DriveFleet
 
-## Getting Started
+## Premium Car Rental Platform
 
-First, run the development server:
+DriveFleet is a modern premium car rental web application built with Next.js, Express.js, MongoDB, and JWT Authentication where users can explore luxury vehicles, manage bookings, add their own cars, and maintain their profile through a sleek responsive dashboard experience.
 
+---
+
+# Live Links
+
+## Client
+
+[https://drive-fleet-clientside.vercel.app]
+
+## Server
+
+[https://drive-fleet-serverside.vercel.app]
+
+---
+
+# Features
+
+* Premium responsive UI
+
+* Modern glassmorphism design
+
+* Dark / Light theme support
+
+* Fully responsive mobile, tablet, and desktop navigation with premium glassmorphism UI and animated dropdown menus.
+
+* JWT Authentication system
+
+* Register & Login functionality
+
+* Manage user profile
+
+* Update profile information
+
+* Add new cars
+
+* Edit listed cars
+
+* Delete cars
+
+* Book premium vehicles
+
+* Cancel bookings
+
+* Protected routes
+
+* Search and filter cars
+
+* Sorting functionality
+
+* Loading animations
+
+* Empty states
+
+* MongoDB database integration
+
+* Premium responsive UI
+
+* Dark / Light theme support
+
+* JWT Authentication
+
+* Register & Login system
+
+* Add new cars
+
+* Update car information
+
+* Delete cars
+
+* Book cars
+
+* Cancel bookings
+
+* Protected routes
+
+* Mobile responsive navbar
+
+* Search and filter cars
+
+* Loading states and empty states
+
+* MongoDB database integration
+
+---
+
+# Tech Stack
+
+## Client
+
+* Next.js
+* Tailwind CSS
+* Hero UI
+* Axios
+* React Hot Toast
+* React Icons
+
+## Server
+
+* Express.js
+* MongoDB
+* Mongoose
+* JWT
+* CORS
+* dotenv
+
+
+---
+
+# Installation
+
+## Git Repository
+
+## Client
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Safa-Anan08/drive-fleet-clientside
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Server
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+git clone https://github.com/Safa-Anan08/drive-fleet-serverside
+```
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Client Setup
 
-## Learn More
+```bash
+cd drive-fleet-clientside
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Server Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+cd drive-fleet-serverside
+npm install
+npm run dev
+```
 
-## Deploy on Vercel
+## Server Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create a `.env` file:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```env
+PORT=5000
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_secret_key
+```
+
+---
+
+
+# User Functionalities
+
+## Authentication
+
+* User Registration
+* User Login
+* Secure JWT Authentication
+* Protected Dashboard Access
+
+## User Profile
+
+* View Profile Information
+* Update Profile Details
+* Change Profile Image
+* Manage Personal Information
+
+## Car Management
+
+* Add Cars
+* Update Car Information
+* Delete Cars
+* View Listed Cars
+
+## Booking System
+
+* Book Cars
+* View Booking History
+* Cancel Bookings
+* Manage Reservations
+
+---
+
+# UI Highlights
+
+* Premium dark-themed interface
+* Smooth hover animations
+* Glass effect cards
+* Responsive mobile experience
+* Modern dashboard layout
+* Interactive booking cards
+* Luxury inspired color grading
+
+---
+
+# Author
+
+Developed by Safa Anan.
+
+---
+
+# License
+
+This project is created for learning and assignment purposes.

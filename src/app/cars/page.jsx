@@ -52,19 +52,15 @@ const [typeFilter, setTypeFilter] = useState(typeFromQuery || "");
     
 
 if (typeFilter) {
-  filtered = filtered.filter(
-    (car) =>
-      car.type.toLowerCase() === typeFilter.toLowerCase()
+  const types = typeFilter
+    .split(",")
+    .map((type) => type.trim().toLowerCase());
+
+  filtered = filtered.filter((car) =>
+    types.includes(car.type?.toLowerCase())
   );
-
 }
-    // if (typeFilter) {
-    //   filtered = filtered.filter((car) => car.type === typeFilter);
-    // }
-
-    // if (typeFromQuery) {
-    //   filtered = filtered.filter((car) => car.type === typeFromQuery);
-    // }
+  
 
     if (availableOnly) {
       filtered = filtered.filter((car) => car.availableCars > 0);
@@ -137,7 +133,10 @@ if (typeFilter) {
       <option value="">All Types</option>
       <option value="SUV">SUV</option>
       <option value="Sedan">Sedan</option>
-      <option value="Luxury">Luxury</option>
+      <option value="Luxury SUV">Luxury SUV </option>
+      <option value="Luxury Sedan">Luxury Sedan </option>
+      <option value="Microbus">Microbus </option>
+      
     </select>
 
     <select

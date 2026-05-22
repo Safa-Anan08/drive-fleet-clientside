@@ -10,6 +10,7 @@ import {
   FaImage,
   FaGasPump,
 } from "react-icons/fa";
+import PrivateRoute from "@/components/PrivateRoute";
 
 export default function AddCar() {
    const protectedRoute = (path) => {
@@ -112,6 +113,7 @@ export default function AddCar() {
   };
 
   return (
+    <PrivateRoute>
     <section
       className="
         min-h-screen
@@ -203,7 +205,7 @@ export default function AddCar() {
 
           <div className="grid md:grid-cols-2 gap-6">
             <InputField
-              icon={<FaCarSide />}
+              
               name="name"
               placeholder="Car Name"
               onChange={handleChange}
@@ -268,10 +270,22 @@ export default function AddCar() {
     </option>
 
     <option
-      value="Luxury"
+      value="Luxury SUV"
       className="bg-white text-black dark:bg-[#0f172a] dark:text-white"
     >
-      Luxury
+      Luxury SUV
+    </option>
+    <option
+      value="Luxury Sedan"
+      className="bg-white text-black dark:bg-[#0f172a] dark:text-white"
+    >
+      Luxury Sedan
+    </option>
+    <option
+      value="Luxury Sedan"
+      className="bg-white text-black dark:bg-[#0f172a] dark:text-white"
+    >
+      Microbus
     </option>
   </select>
 
@@ -292,7 +306,7 @@ export default function AddCar() {
             />
 
             <InputField
-              icon={<FaGasPump />}
+            
               name="mileage"
               placeholder="Mileage"
               onChange={handleChange}
@@ -306,14 +320,14 @@ export default function AddCar() {
             />
 
             <InputField
-              icon={<FaMapMarkerAlt />}
+             
               name="location"
               placeholder="Location"
               onChange={handleChange}
             />
 
             <InputField
-              icon={<FaImage />}
+            
               name="image"
               placeholder="Image URL"
               onChange={handleChange}
@@ -386,6 +400,7 @@ export default function AddCar() {
         </form>
       </div>
     </section>
+     </PrivateRoute>
   );
 }
 
@@ -433,26 +448,13 @@ function InputField({
         name={name}
         placeholder={placeholder}
         onChange={onChange}
-        className={`
-          relative z-10
-          w-full h-16
-          rounded-3xl
-          border border-slate-200 dark:border-white/10
-          bg-white/80 dark:bg-white/5
-          backdrop-blur-xl
-          text-slate-800 dark:text-white
-          placeholder:text-slate-400 dark:placeholder:text-white/40
-          shadow-[0_8px_30px_rgba(0,0,0,0.04)]
-          dark:shadow-[0_8px_30px_rgba(0,0,0,0.2)]
-          transition-all duration-300
-          focus:outline-none
-          focus:ring-2
-          focus:ring-cyan-500/40
-          focus:border-cyan-400
-          hover:border-cyan-300/50
-          ${icon ? "pl-14 pr-5" : "px-5"}
-        `}
+   className={`relative z-10 w-full h-16 rounded-3xl border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/40 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.2)] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-400 hover:border-cyan-300/50 ${
+  icon ? "pl-14 pr-5" : "px-5"
+}`}
       />
+
+     
     </div>
+    
   );
 }

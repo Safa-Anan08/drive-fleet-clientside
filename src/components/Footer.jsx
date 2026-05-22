@@ -49,7 +49,7 @@ export default function Footer() {
             </li>
 
             <li>
-              <Link href="/my-profile" className="hover:text-green-500">
+              <Link href="/profile" className="hover:text-green-500">
                 Profile
               </Link>
             </li>
